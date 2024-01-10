@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class LinkedListWithTail {
+public class MyDoublyLinkedList {
     private Node head;
     private Node tail;
     private int size;
@@ -12,6 +12,7 @@ public class LinkedListWithTail {
 
         if (!isEmpty()) {
             newNode.next = this.head;
+            this.head.prev = newNode;
         } else {
             this.tail = newNode;
         }
@@ -27,6 +28,7 @@ public class LinkedListWithTail {
             Node newNode = new Node(number);
 
             this.tail.next = newNode;
+            newNode.prev = this.tail;
             this.tail = newNode;
             size++;
         }
@@ -43,6 +45,8 @@ public class LinkedListWithTail {
         if (isEmpty()) {
             this.head = null;
             this.tail = null;
+        } else {
+            this.head.prev = null;
         }
 
         return element;
@@ -56,14 +60,8 @@ public class LinkedListWithTail {
         }
 
         int element = this.tail.value;
-
-        Node currentNode = this.head;
-        while (currentNode.next.next != null) {
-            currentNode = currentNode.next;
-        }
-
-        currentNode.next = null;
-        this.tail = currentNode;
+        this.tail = tail.prev;
+        this.tail.next = null;
         size--;
 
         return element;
@@ -74,16 +72,22 @@ public class LinkedListWithTail {
             throw new IllegalStateException("Index is out of bounds.");
         }
 
-        if (index == this.size - 1) {
-            return this.tail.value;
+        Node element;
+        if (index <= this.size / 2) {
+            element = this.head;
+
+            for (int i = 0; i < index; i++) {
+                element = element.next;
+            }
+
+        } else {
+            element = this.tail;
+
+            for (int i = this.size - 1; i > index; i--) {
+                element = element.prev;
+            }
+
         }
-
-        Node element = this.head;
-
-        for (int i = 0; i < index; i++) {
-            element = element.next;
-        }
-
         return element.value;
     }
 
