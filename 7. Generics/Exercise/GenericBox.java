@@ -28,8 +28,7 @@ public class GenericBox<E extends Comparable<E>> {
         return result.toString().trim();
     }
 
-    public long countOccursWith(E o) {
-
+    public long countGreaterThan(E o) {
         return elements.stream().filter(data -> data.compareTo(o) > 0).count();
     }
 
