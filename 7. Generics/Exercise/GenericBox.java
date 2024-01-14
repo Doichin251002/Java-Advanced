@@ -9,5 +9,8 @@ public class GenericBox<E extends Comparable<E>> {
         this.elements = new ArrayList<E>();
     }
 
+    public void add(E data) {
+        this.elements.add(data);
+    }
 
 }
