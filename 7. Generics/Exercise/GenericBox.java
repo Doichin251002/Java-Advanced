@@ -33,4 +33,10 @@ public class GenericBox<E extends Comparable<E>> {
         return elements.stream().filter(data -> data.compareTo(o) > 0).count();
     }
 
+    private void validateIndex(int index) {
+        if (index < 0 || index >= this.elements.size()) {
+            throw new IndexOutOfBoundsException("Invalid index " + index);
+        }
+    }
+
 }
