@@ -17,4 +17,15 @@ public class GenericBox<E extends Comparable<E>> {
         Collections.swap(this.elements, firstIndex, secondIndex);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+
+        for (E data : elements) {
+            result.append(String.format("%s: %s\n", data.getClass().getName(), data.toString()));
+        }
+
+        return result.toString().trim();
+    }
+
 }
