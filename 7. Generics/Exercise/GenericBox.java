@@ -13,4 +13,8 @@ public class GenericBox<E extends Comparable<E>> {
         this.elements.add(data);
     }
 
+    public void swap(int firstIndex, int secondIndex) {
+        Collections.swap(this.elements, firstIndex, secondIndex);
+    }
+
 }
