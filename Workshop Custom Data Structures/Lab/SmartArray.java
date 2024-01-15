@@ -1,12 +1,32 @@
+import java.util.Iterator;
 import java.util.function.Consumer;
 
-public class SmartArray<E> {
+public class SmartArray<E> implements Iterable<E> {
     private Object[] elements;
     private int size;
 
     public SmartArray() {
         this.elements = new Object[4];
         this.size = 0;
+    }
+
+    private class SmartArrayIterator implements Iterator<E> {
+        private int i = 0;
+
+        @Override
+        public boolean hasNext() {
+            return i < size;
+        }
+
+        @Override
+        public E next() {
+            return get(i++);
+        }
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new SmartArrayIterator();
     }
 
     public void add(E data) {
@@ -66,13 +86,6 @@ public class SmartArray<E> {
         }
 
         return element;
-    }
-
-    public void forEach(Consumer<E> consumer) {
-        for (int i = 0; i < this.size; i++) {
-            E e = get(i);
-            consumer.accept(e);
-        }
     }
 
     private Object[] expand() {
