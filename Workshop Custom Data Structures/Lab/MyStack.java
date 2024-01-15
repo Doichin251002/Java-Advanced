@@ -1,6 +1,7 @@
+import java.util.Iterator;
 import java.util.function.Consumer;
 
-public class MyStack<E> {
+public class MyStack<E> implements Iterable<E> {
     private static class Node<T> {
         private T element;
         private Node<T> prev;
@@ -14,7 +15,25 @@ public class MyStack<E> {
     private Node<E> top;
     private int size;
 
-    public MyStack() {
+    public MyStack() {}
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private Node<E> current = top;
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public E next() {
+                E element = current.element;
+                current = current.prev;
+                
+                return element;
+            }
+        };
     }
 
     public void push(E element) {
@@ -37,16 +56,6 @@ public class MyStack<E> {
         ensureIsNotEmpty();
 
         return this.top.element;
-    }
-
-    public void forEach(Consumer<E> consumer) {
-        Node<E> currentElement = this.top;
-
-        while (currentElement != null) {
-            consumer.accept(currentElement.element);
-
-            currentElement = currentElement.prev;
-        }
     }
 
     public int size() {
