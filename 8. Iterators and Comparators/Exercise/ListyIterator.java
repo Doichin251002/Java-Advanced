@@ -1,7 +1,8 @@
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ListyIterator {
+public class ListyIterator implements Iterable<String>{
     private List<String> elements;
     private int currentIndex;
 
@@ -9,6 +10,22 @@ public class ListyIterator {
     public ListyIterator(String... elements) {
         this.elements = List.of(elements);
         this.currentIndex = 0;
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new Iterator<String>() {
+            private int i = 0;
+            @Override
+            public boolean hasNext() {
+                return this.i < elements.size();
+            }
+
+            @Override
+            public String next() {
+                return elements.get(i++);
+            }
+        };
     }
 
     public boolean hasNext() {
@@ -30,4 +47,7 @@ public class ListyIterator {
         System.out.println(this.elements.get(currentIndex));
     }
 
+    public void printAll() {
+        System.out.println(String.join(" ", this.elements));
+    }
 }
